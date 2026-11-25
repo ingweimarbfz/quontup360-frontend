@@ -937,3 +937,9 @@ input:invalid:not(:placeholder-shown):not(:focus) { border-color: var(--bad); }
 .request-toast .btn { flex-shrink: 0; }
 .request-toast .btn-ghost { color: var(--gray-300); }
 @media (max-width: 640px) { .request-toasts { left: 16px; right: 16px; bottom: 16px; max-width: none; } }
+
+/* KU-041 · Avatares ilustrados para la foto del cliente */
+.avatar-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 10px; }
+.avatar-option { padding: 4px; border: 2px solid transparent; border-radius: 50%; background: none; cursor: pointer; display: flex; justify-content: center; transition: border-color .15s, transform .15s; }
+.avatar-option:hover, .avatar-option:focus-visible { border-color: var(--brand); transform: scale(1.04); outline: none; }
+.avatar-option svg { display: block; border-radius: 50%; }

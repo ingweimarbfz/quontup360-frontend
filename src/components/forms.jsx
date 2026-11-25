@@ -1,7 +1,8 @@
 import React, { useRef, useState } from 'react'
-import { MdPhotoCamera, MdPhotoLibrary, MdDelete, MdMyLocation, MdPictureAsPdf, MdReceipt, MdAttachFile } from 'react-icons/md'
+import { MdFace, MdPhotoCamera, MdPhotoLibrary, MdDelete, MdMyLocation, MdPictureAsPdf, MdReceipt, MdAttachFile } from 'react-icons/md'
 import { fileToDataUrl } from '../utils/image'
 import { Spinner } from './ui'
+import { AvatarPicker } from './avatars'
 
 // Campo de dinero: muestra separadores de miles y entrega un número.
 export const MoneyInput = ({ value, onChange, id, placeholder = '0', ...rest }) => {
@@ -18,7 +19,9 @@ export const MoneyInput = ({ value, onChange, id, placeholder = '0', ...rest }) 
 // Foto tomada con la cámara (en celular) o cargada desde la galería o el equipo (KU-031).
 // Entrega { photo, thumb } en data URL.
 // doc: formato de tarjeta (documento de identidad), con más resolución para que se lea.
-export const PhotoInput = ({ value, onChange, label = 'Tomar foto', round = true, capture = 'environment', withThumb = false, doc = false, placeholder = null }) => {
+// avatars: permite elegir un avatar ilustrado en lugar de una foto (KU-041).
+export const PhotoInput = ({ value, onChange, label = 'Tomar foto', round = true, capture = 'environment', withThumb = false, doc = false, placeholder = null, avatars = false }) => {
+  const [choosing, setChoosing] = useState(false)
   const ref = useRef(null)
   const gallery = useRef(null)
   const [busy, setBusy] = useState(false)
@@ -42,11 +45,13 @@ export const PhotoInput = ({ value, onChange, label = 'Tomar foto', round = true
       <div className="photo-actions">
         <button type="button" className="btn btn-sm" onClick={() => ref.current?.click()} title="Tomar foto con la cámara">{busy ? <Spinner /> : <MdPhotoCamera />} {value ? 'Tomar otra' : label}</button>
         <button type="button" className="btn btn-sm" onClick={() => gallery.current?.click()} title="Cargar una foto guardada"><MdPhotoLibrary /> Cargar</button>
+        {avatars && <button type="button" className="btn btn-sm" onClick={() => setChoosing(true)} title="Elegir un avatar ilustrado"><MdFace /> Avatar</button>}
         {value && <button type="button" className="btn btn-sm btn-ghost" onClick={() => onChange(withThumb ? { photo: null, thumb: null } : null)}><MdDelete /> Quitar</button>}
         {error && <small className="error">{error}</small>}
       </div>
       <input ref={ref} type="file" accept="image/*" capture={capture} hidden onChange={pick} />
       <input ref={gallery} type="file" accept="image/*" hidden onChange={pick} />
+      {choosing && <AvatarPicker onClose={() => setChoosing(false)} onPick={({ photo, thumb }) => { setChoosing(false); onChange(withThumb ? { photo, thumb } : photo) }} />}
     </div>
   )
 }

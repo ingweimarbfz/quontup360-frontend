@@ -45,7 +45,7 @@ const CustomerForm = ({ initial, onClose, onSaved }) => {
         <div className="section-title">Foto</div>
         <div className="span-2 photo-row">
           <Field label="Foto de la persona" required>
-            <PhotoInput value={form.photoUrl} withThumb capture="user" label="Tomar foto" onChange={({ photo, thumb }) => setForm((f) => ({ ...f, photoUrl: photo, photoThumb: thumb }))} />
+            <PhotoInput value={form.photoUrl} withThumb avatars capture="user" label="Tomar foto" onChange={({ photo, thumb }) => setForm((f) => ({ ...f, photoUrl: photo, photoThumb: thumb }))} />
           </Field>
           <Field label="Documento · parte delantera" required>
             <PhotoInput doc value={form.idPhotoUrl} label="Delantera" placeholder={<DocIcon side="front" />} onChange={(v) => setForm((f) => ({ ...f, idPhotoUrl: v }))} />
