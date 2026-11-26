@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { MdPhotoCamera, MdPhotoLibrary, MdLock } from 'react-icons/md'
+import { MdFace, MdPhotoCamera, MdPhotoLibrary, MdLock } from 'react-icons/md'
 import api, { errorMessage } from '../api/client'
 import { useAuth } from '../context/AuthContext'
 import { Avatar, Badge, Card, Field, PageHead, Spinner, useToast } from '../components/ui'
 import { fileToDataUrl } from '../utils/image'
+import { AvatarPicker } from '../components/avatars'
 import { ROLE_LABELS } from '../utils/nav'
 import { phoneProps } from '../utils/phones'
 
@@ -12,6 +13,7 @@ const ProfilePage = () => {
   const [contact, setContact] = useState({ email: user.email || '', phone: user.phone || '' })
   const [pass, setPass] = useState({ currentPassword: '', newPassword: '', confirm: '' })
   const [busy, setBusy] = useState('')
+  const [choosing, setChoosing] = useState(false)
   const [toast, toastNode] = useToast()
 
   const save = async (body, what, ok) => {
@@ -42,7 +44,9 @@ const ProfilePage = () => {
             <div className="photo-actions center">
               <label className="btn btn-sm">{busy === 'photo' ? <Spinner /> : <MdPhotoCamera />} Tomar foto<input type="file" accept="image/*" capture="user" hidden onChange={onPhoto} /></label>
               <label className="btn btn-sm"><MdPhotoLibrary /> Cargar foto<input type="file" accept="image/*" hidden onChange={onPhoto} /></label>
+              <button type="button" className="btn btn-sm" onClick={() => setChoosing(true)}><MdFace /> Avatar</button>
             </div>
+            {choosing && <AvatarPicker onClose={() => setChoosing(false)} onPick={({ photo }) => { setChoosing(false); save({ avatarUrl: photo }, 'photo', 'Avatar actualizado') }} />}
             <h2>{user.fullName}</h2>
             <Badge tone="dark">{ROLE_LABELS[user.role]}</Badge>
             <dl className="meta">
