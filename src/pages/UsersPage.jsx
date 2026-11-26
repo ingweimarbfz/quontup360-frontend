@@ -70,7 +70,7 @@ const UserForm = ({ initial, onClose, onSaved }) => {
       <form id="user-form" onSubmit={submit} className="form-grid" noValidate>
         {!isClient && (
           <div className="span-2 photo-row">
-            <Field label="Foto de la persona" required>{loadingPhotos ? <Spinner /> : <PhotoInput value={form.photoUrl} withThumb capture="user" label="Tomar foto" onChange={({ photo, thumb }) => setForm((f) => ({ ...f, photoUrl: photo, avatarUrl: thumb }))} />}</Field>
+            <Field label="Foto de la persona" required>{loadingPhotos ? <Spinner /> : <PhotoInput value={form.photoUrl} withThumb avatars capture="user" label="Tomar foto" onChange={({ photo, thumb }) => setForm((f) => ({ ...f, photoUrl: photo, avatarUrl: thumb }))} />}</Field>
             <Field label="Documento · frente" required>{loadingPhotos ? <Spinner /> : <PhotoInput doc value={form.idPhotoUrl} label="Frente" placeholder={<DocIcon side="front" />} onChange={(v) => setForm((f) => ({ ...f, idPhotoUrl: v }))} />}</Field>
             <Field label="Documento · reverso" required>{loadingPhotos ? <Spinner /> : <PhotoInput doc value={form.idPhotoBackUrl} label="Reverso" placeholder={<DocIcon side="back" />} onChange={(v) => setForm((f) => ({ ...f, idPhotoBackUrl: v }))} />}</Field>
           </div>
