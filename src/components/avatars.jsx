@@ -115,7 +115,7 @@ export const AvatarPicker = ({ onPick, onClose }) => {
         <div className="avatar-grid">
           {list.map((a) => <button key={a.id} type="button" className="avatar-option" onClick={pick} title={a.label}><AvatarSvg a={a} size={84} /></button>)}
         </div>
-        <small className="hint">Úsalo cuando el cliente no quiere o no puede tomarse la foto. Puedes cambiarlo después por una foto real.</small>
+        <small className="hint">Úsalo cuando la persona no quiere o no puede tomarse la foto. Puedes cambiarlo después por una foto real.</small>
         {error && <div className="alert bad">{error}</div>}
       </div>
     </Modal>
